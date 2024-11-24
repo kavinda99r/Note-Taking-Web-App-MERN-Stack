@@ -67,4 +67,4 @@ npm start
 <br>
 
 > [!NOTE]
-> Once both the frontend and backend servers are running, the note-taking app will be fully operational.
+> Once both the frontend and backend servers are running, the web application will be fully operational.
