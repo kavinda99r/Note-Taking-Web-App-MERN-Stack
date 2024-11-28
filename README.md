@@ -30,7 +30,7 @@ This is a full-stack Note-taking application built using the MERN stack (MongoDB
 
 <h3>Install Dependencies</h3>
 
-<h4>1. Navigate to the frontend directory and install dependencies.</h4>
+<h4>1. Navigate to the frontend directory and install dependencies</h4>
 
 ```
 cd frontend/note-app
@@ -39,7 +39,7 @@ cd frontend/note-app
 npm i
 ```
 
-<h4>2. Install backend dependencies.</h4>
+<h4>2. Install backend dependencies</h4>
 
 ```
 cd ../backend
@@ -49,14 +49,14 @@ npm i
 ```
 
 <h3>Running the Application</h3>
-<h4>1. To run the backend, open a new terminal and use.</h4>
+<h4>1. To run the backend, open a new terminal and use</h4>
 <p>If you are already in the backend directory, run this in the terminal.</p>
 
 ```
 npm start
 ```
 
-<h4>2. To run the frontend, use the following commands.</h4>
+<h4>2. To run the frontend, use the following commands</h4>
 
 ```
 cd ../frontend/note-app
