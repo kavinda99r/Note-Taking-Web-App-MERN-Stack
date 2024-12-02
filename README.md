@@ -1,4 +1,4 @@
-# Note-Taking Web Application using MERN Stack ✅
+# NoteSnap - Note-Taking Web Application using MERN Stack ✅
 
 This is a full-stack Note-taking application built using the MERN stack (MongoDB, Express, React, Node.js). The app provides a clean and simple user interface, allowing users to easily create, edit, and delete notes.
 
