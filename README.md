@@ -14,7 +14,7 @@ This is a full-stack Note-taking application built using the MERN stack (MongoDB
 
 
 
-<h3>Technologies Used</h3> 
+<h3>Tech Stack</h3> 
 
 - Frontend: React.js, Tailwind CSS
 - Backend: Node.js, Express.js
