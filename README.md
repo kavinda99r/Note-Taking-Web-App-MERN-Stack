@@ -4,7 +4,7 @@ This is a full-stack Note-taking application built using the MERN stack (MongoDB
 
 
 
-<h3>Key Features</h3>
+<h3>Key Features ✨</h3>
 
 - Add Notes: Create new notes with titles, descriptions and tags.
 - Edit Notes: Modify existing notes with ease.
@@ -12,17 +12,15 @@ This is a full-stack Note-taking application built using the MERN stack (MongoDB
 - Search Notes: Quickly find notes using the search functionality.
 - Pin Notes: Mark important notes to pin them to the top of your list.
 
+<h3>Tech Stack 🛠️</h3>
 
-
-<h3>Tech Stack</h3> 
-
-- Frontend: React.js, Tailwind CSS
-- Backend: Node.js, Express.js
+- Frontend: ReactJS with Tailwind CSS
+- Backend: Node.js with ExpressJS
 - Database: MongoDB
 
 <br>
 
-<h2>Installation Guide</h2>
+<h2>Installation Guide 💻</h2>
 1. Extract the project folder. <br>
 2. Open the folder in VS Code. 
 
@@ -65,7 +63,8 @@ cd ../frontend/note-app
 npm run dev
 ```
 
-<br>
+<h2> </h2>
 
-> [!NOTE]
-> Once both the frontend and backend servers are running, the web application will be fully operational.
+<h3>Happy Coding! 🎉</h3>
+
+---
