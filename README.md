@@ -2,8 +2,6 @@
 
 This is a full-stack Note-taking application built using the MERN stack (MongoDB, Express, React, Node.js). The app provides a clean and simple user interface, allowing users to easily create, edit, and delete notes.
 
-
-
 <h3>Key Features ✨</h3>
 
 - Add Notes: Create new notes with titles, descriptions and tags.
