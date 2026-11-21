@@ -4,136 +4,29 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import ProfileInfo from "./ProfileInfo";
 import SearchBar from "./SearchBar";
-
-const styles = `
-.dashboard-header {
-  display: grid;
-  align-items: center;
-  border-bottom: 1px solid var(--color-border);
-}
-.dashboard-brand {
-  display: flex;
-  align-items: center;
-  font-size: 25px;
-  font-weight: 700;
-  letter-spacing: -1px;
-  width: fit-content;
-}
-.dashboard-brand > span {
-  display: grid;
-  place-items: center;
-  width: 37px;
-  height: 39px;
-  margin-right: 10px;
-  border-radius: 11px 11px 11px 3px;
-  background: var(--color-primary);
-  color: var(--color-surface);
-  font-size: 21px;
-}
-.dashboard-brand strong {
-  color: var(--color-primary);
-}
-@media (max-width: 1250px) {
-  .dashboard-header {
-  padding-inline: 26px;
-  gap: 25px;
-  grid-template-columns: 190px minmax(180px, 1fr) auto;
-}
-
-}
-@media (max-width: 900px) {
-  .dashboard-header {
-  grid-template-columns: auto minmax(180px, 1fr) auto;
-  gap: 24px;
-}
-
-}
-@media (max-width: 600px) {
-  .dashboard-header {
-  padding: 16px 18px;
-}
-
-}
-@media (max-width: 600px) {
-  .dashboard-brand {
-  font-size: 23px;
-}
-
-}
-.dashboard-header {
-  width: min(1240px, calc(100% - 96px));
-  margin-inline: auto;
-  min-height: 80px;
-  padding: 16px 0;
-  grid-template-columns: 1fr minmax(240px, 480px) 1fr;
-  gap: 30px;
-  background: transparent;
-}
-@media (max-width: 1050px) {
-  .dashboard-header {
-  width: calc(100% - 56px);
-}
-
-}
-@media (max-width: 1050px) {
-  .dashboard-header {
-  grid-template-columns: auto minmax(180px, 1fr) auto;
-  gap: 28px;
-}
-
-}
-@media (max-width: 600px) {
-  .dashboard-header {
-  grid-template-columns: 1fr auto;
-  gap: 16px;
-}
-
-}
-@media (max-width: 540px) {
-  .dashboard-header {
-  width: calc(100% - 36px);
-}
-
-}
-.dashboard-header-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 18px;
-  justify-self: end;
-}
-@media (max-width: 600px) {
-  .dashboard-header-actions {
-  grid-column: 2;
-  grid-row: 1;
-  gap: 12px;
-}
-
-}
-@media (max-width: 600px) {
-  .dashboard-header-actions .button-primary {
-  font-size: 13px;
-}
-
-}
-@media (max-width: 600px) {
-  .dashboard-header-spacer {
-  display: none;
-}
-
-}
-`;
-
-const Navbar = ({ onSearchNote, handleClearSearch, onAddNote }) => {
+const Navbar = ({
+  onSearchNote,
+  handleClearSearch,
+  onAddNote
+}) => {
   const [searchQuery, setSearchQuery] = useState("");
-  return (
-    <header className="dashboard-header">
-      <style>{styles}</style>
-      <Link to="/" className="dashboard-brand" aria-label="NoteSnap home"><span><Icon name="journal-text" /></span>Note<strong>Snap.</strong></Link>
-      {onSearchNote ? <SearchBar value={searchQuery} onChange={({ target }) => { setSearchQuery(target.value); onSearchNote(target.value); }} handleSearch={() => onSearchNote(searchQuery)} onClearSearch={() => { setSearchQuery(""); handleClearSearch?.(); }} /> : <div className="dashboard-header-spacer" />}
-      <div className="dashboard-header-actions">{onAddNote && <button className="button-primary" onClick={onAddNote}><Icon name="plus-lg" /> New note</button>}<ProfileInfo /></div>
-    </header>
-  );
+  return <header className="grid items-center [border-bottom:1px_solid_var(--color-border)] w-[min(1240px,_calc(100%_-_96px))] mx-auto min-h-20 py-4 px-0 grid-cols-[1fr_minmax(240px,_480px)_1fr] gap-[30px] bg-transparent max-[1050px]:w-[calc(100%_-_56px)] max-[1050px]:grid-cols-[auto_minmax(180px,_1fr)_auto] max-[1050px]:gap-7 max-[600px]:grid-cols-[1fr_auto] max-[600px]:gap-4 max-[540px]:w-[calc(100%_-_36px)]">
+      <Link to="/" className="flex items-center text-[25px] font-bold tracking-[-1px] w-fit [&_>_span]:grid [&_>_span]:place-items-center [&_>_span]:w-[37px] [&_>_span]:h-[39px] [&_>_span]:mr-2.5 [&_>_span]:rounded-[11px_11px_11px_3px] [&_>_span]:bg-primary [&_>_span]:text-surface [&_>_span]:text-[21px] [&_strong]:text-primary max-[600px]:text-[23px]" aria-label="NoteSnap home"><span><Icon name="journal-text" /></span>Note<strong>Snap.</strong></Link>
+      {onSearchNote ? <SearchBar value={searchQuery} onChange={({
+      target
+    }) => {
+      setSearchQuery(target.value);
+      onSearchNote(target.value);
+    }} handleSearch={() => onSearchNote(searchQuery)} onClearSearch={() => {
+      setSearchQuery("");
+      handleClearSearch?.();
+    }} /> : <div className="max-[600px]:hidden" />}
+      <div className="flex items-center justify-end gap-[18px] justify-self-end max-[600px]:[grid-column:2] max-[600px]:[grid-row:1] max-[600px]:gap-3 max-[600px]:[&_.button-primary]:text-[13px]">{onAddNote && <button className="button-primary" onClick={onAddNote}><Icon name="plus-lg" /> New note</button>}<ProfileInfo /></div>
+    </header>;
 };
-Navbar.propTypes = { onSearchNote: PropTypes.func, handleClearSearch: PropTypes.func, onAddNote: PropTypes.func };
+Navbar.propTypes = {
+  onSearchNote: PropTypes.func,
+  handleClearSearch: PropTypes.func,
+  onAddNote: PropTypes.func
+};
 export default Navbar;

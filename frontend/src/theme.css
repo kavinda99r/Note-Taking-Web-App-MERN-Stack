@@ -22,7 +22,10 @@
   --color-primary-shadow: #2563eb18;
   --color-primary-glow: #2563eb55;
 }
+
 :root { --button-padding-y: 10px; --button-padding-x: 20px; }
+
+@layer components {
 .button-primary, .button-secondary, .button-danger {
   display: inline-flex; align-items: center; justify-content: center; gap: 9px;
   padding: var(--button-padding-y) var(--button-padding-x); border-radius: 9px;
@@ -52,7 +55,7 @@
 .password-field button { min-width: 24px; min-height: 30px; color: var(--color-muted); }
 .form-error { color: var(--color-danger); background: var(--color-danger-soft); border: 1px solid var(--color-danger-border); padding: 10px 12px; border-radius: 8px; margin-bottom: 18px; font-size: 14px; line-height: 1.6; }
 @media (prefers-reduced-motion: reduce) { .form-field input, .form-field textarea, .password-field { transition: none; } }
-
 .note-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 20px; }
 .note-tags span { padding: 4px 7px; background: var(--color-soft); color: var(--color-muted); font-size: 11px; border-radius: 5px; overflow-wrap: anywhere; max-width: 100%; }
 .modal-actions { display: flex; justify-content: flex-end; gap: 12px; padding-top: 25px; margin-top: 25px; border-top: 1px solid var(--color-border); }
+}

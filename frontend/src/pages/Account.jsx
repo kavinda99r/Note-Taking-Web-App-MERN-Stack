@@ -3,201 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import PasswordInput from "../components/PasswordInput";
 import axiosInstance from "../utils/axiosInstance";
-
-const styles = `
-.account-page { min-height: 100svh; }
-.account-main {
-  width: min(1240px, calc(100% - 96px));
-  min-height: calc(100svh - 80px);
-  margin-inline: auto;
-  padding-block: 20px 26px;
-}
-.account-navigation {
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  font-size: 14px;
-  color: var(--color-muted);
-  margin-bottom: 20px;
-}
-.account-navigation a {
-  color: var(--color-ink);
-}
-.account-navigation a:hover {
-  color: var(--color-primary);
-}
-.account-navigation > span:last-child {
-  color: var(--color-ink);
-}
-.account-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 18px;
-  align-items: start;
-}
-.account-card {
-  min-width: 0;
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 22px 26px;
-  background: white;
-}
-.account-card h2 {
-  font-size: 19px;
-  font-weight: 600;
-  letter-spacing: -.3px;
-}
-.account-card p {
-  font-size: 14px;
-  color: var(--color-muted);
-  line-height: 1.7;
-  margin-top: 8px;
-}
-.account-details {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
-  margin-top: 18px;
-}
-.account-details dt {
-  color: var(--color-muted);
-  font-size: 13px;
-  margin-bottom: 6px;
-}
-.account-details dd {
-  font-size: 17px;
-  color: var(--color-ink);
-  overflow-wrap: anywhere;
-}
-.account-form {
-  margin-top: 18px;
-}
-.account-form fieldset {
-  min-width: 0;
-}
-.account-form fieldset:disabled {
-  opacity: .65;
-}
-.account-danger {
-  background: var(--color-secondary-soft);
-  border-color: var(--color-danger-border);
-}
-.account-danger h2 {
-  color: var(--color-danger);
-}
-.account-confirmation {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 14px;
-  line-height: 1.7;
-  color: var(--color-danger);
-  margin-bottom: 20px;
-}
-.account-confirmation input {
-  margin-top: 6px;
-  accent-color: var(--color-danger);
-}
-.account-load {
-  color: var(--color-muted);
-  padding-block: 40px;
-}
-@media (max-width: 1050px) {
-  .account-main {
-  width: calc(100% - 56px);
-}
-
-}
-@media (max-width: 760px) {
-  .account-grid {
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-}
-@media (max-width: 540px) {
-  .account-main {
-  width: calc(100% - 36px);
-}
-
-}
-.account-card-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-.account-password-fields {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  column-gap: 20px;
-}
-.account-password-fields > .form-error {
-  grid-column: 1 / -1;
-}
-.account-password-fields > .button-primary {
-  grid-column: 1 / -1;
-  justify-self: start;
-}
-.account-danger {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  column-gap: 24px;
-  align-items: center;
-}
-.account-danger > h2 {
-  grid-column: 1;
-}
-.account-danger > p {
-  grid-column: 1;
-  margin-top: 6px;
-}
-.account-danger > .button-danger {
-  grid-column: 2;
-  grid-row: 1 / 3;
-  margin-top: 0;
-}
-.account-danger > .account-form {
-  grid-column: 1 / -1;
-  border-top: 1px solid var(--color-danger-border);
-  padding-top: 20px;
-}
-@media (max-width: 760px) {
-  .account-password-fields {
-  grid-template-columns: 1fr;
-}
-
-}
-@media (max-width: 760px) {
-  .account-details {
-  grid-template-columns: 1fr;
-  gap: 18px;
-}
-
-}
-@media (max-width: 760px) {
-  .account-card {
-  padding: 20px;
-}
-
-}
-@media (max-width: 760px) {
-  .account-danger {
-  grid-template-columns: 1fr;
-}
-
-}
-@media (max-width: 760px) {
-  .account-danger > .button-danger {
-  grid-column: 1;
-  grid-row: auto;
-  justify-self: start;
-  margin-top: 16px;
-}
-
-}
-`;
-
 const Account = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -217,85 +22,128 @@ const Account = () => {
     if (busy) return;
     setBusy("logout");
     setLogoutError("");
-    try { await axiosInstance.post("/logout"); navigate("/login", { replace: true }); }
-    catch { setLogoutError("Unable to log out. Please try again."); }
-    finally { setBusy(""); }
+    try {
+      await axiosInstance.post("/logout");
+      navigate("/login", {
+        replace: true
+      });
+    } catch {
+      setLogoutError("Unable to log out. Please try again.");
+    } finally {
+      setBusy("");
+    }
   };
   const loadUser = useCallback(async () => {
     setLoading(true);
     setLoadError("");
-    try { const { data } = await axiosInstance.get("/get-user"); setUser(data.user); }
-    catch (error) {
-      if (error.response?.status === 401) { navigate("/login", { replace: true }); }
-      else setLoadError("Your account couldn’t load. Please try again.");
-    } finally { setLoading(false); }
+    try {
+      const {
+        data
+      } = await axiosInstance.get("/get-user");
+      setUser(data.user);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        navigate("/login", {
+          replace: true
+        });
+      } else setLoadError("Your account couldn’t load. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }, [navigate]);
-  useEffect(() => { loadUser(); }, [loadUser]);
+  useEffect(() => {
+    loadUser();
+  }, [loadUser]);
   const handleFailure = (error, setError, fallback) => {
-    if (error.response?.status === 401) navigate("/login", { replace: true });
-    else setError(error.response?.data?.message || fallback);
+    if (error.response?.status === 401) navigate("/login", {
+      replace: true
+    });else setError(error.response?.data?.message || fallback);
   };
-  const changePassword = async (event) => {
+  const changePassword = async event => {
     event.preventDefault();
     if (busy) return;
     setPasswordError("");
-    if (newPassword.length < 8) { setPasswordError("Use at least 8 characters for your new password."); return; }
-    if (newPassword !== confirmPassword) { setPasswordError("The new passwords don’t match."); return; }
+    if (newPassword.length < 8) {
+      setPasswordError("Use at least 8 characters for your new password.");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setPasswordError("The new passwords don’t match.");
+      return;
+    }
     setBusy("password");
     try {
-      await axiosInstance.put("/account/password", { currentPassword, newPassword });
-
-      navigate("/login", { replace: true, state: { notice: "Password changed. Sign in with your new password." } });
-    } catch (error) { handleFailure(error, setPasswordError, "Unable to change your password. Please try again."); }
-    finally { setBusy(""); }
+      await axiosInstance.put("/account/password", {
+        currentPassword,
+        newPassword
+      });
+      navigate("/login", {
+        replace: true,
+        state: {
+          notice: "Password changed. Sign in with your new password."
+        }
+      });
+    } catch (error) {
+      handleFailure(error, setPasswordError, "Unable to change your password. Please try again.");
+    } finally {
+      setBusy("");
+    }
   };
-  const deleteAccount = async (event) => {
+  const deleteAccount = async event => {
     event.preventDefault();
     if (busy || !confirmed) return;
     setBusy("delete");
     setDeleteError("");
     try {
-      await axiosInstance.delete("/account", { data: { currentPassword: deletePassword } });
-
-      navigate("/", { replace: true });
-    } catch (error) { handleFailure(error, setDeleteError, "Unable to delete your account. Please try again."); }
-    finally { setBusy(""); }
+      await axiosInstance.delete("/account", {
+        data: {
+          currentPassword: deletePassword
+        }
+      });
+      navigate("/", {
+        replace: true
+      });
+    } catch (error) {
+      handleFailure(error, setDeleteError, "Unable to delete your account. Please try again.");
+    } finally {
+      setBusy("");
+    }
   };
-  return (
-    <div className="dashboard account-page">
-      <style>{styles}</style>
+  return <div className="min-h-[100svh] min-h-[100svh]">
       <Navbar />
-      <main className="account-main" aria-label="Account settings">
-        <nav className="account-navigation" aria-label="Account navigation"><Link to="/dashboard">Back to notes</Link><span aria-hidden="true">/</span><span>Account</span></nav>
-        {loading ? <p className="account-load" role="status">Loading your account…</p> : loadError ? <div className="account-card" role="alert"><p>{loadError}</p><button className="button-primary" onClick={loadUser}>Try again</button></div> : user && (
-          <div className="account-grid">
-            <section className="account-card" aria-labelledby="account-details-heading">
-                <div className="account-card-heading"><h2 id="account-details-heading">Account Details</h2><button className="button-secondary" onClick={logout} disabled={Boolean(busy)}>Log out</button></div>
+      <main className="w-[min(1240px,_calc(100%_-_96px))] min-h-[calc(100svh_-_80px)] mx-auto pt-[20px] pb-[26px] max-[1050px]:w-[calc(100%_-_56px)] max-[540px]:w-[calc(100%_-_36px)]" aria-label="Account settings">
+        <nav className="flex items-center gap-[13px] text-[14px] text-muted mb-5 [&_a]:text-ink [&_a:hover]:text-primary [&_>_span:last-child]:text-ink" aria-label="Account navigation"><Link to="/dashboard">Back to notes</Link><span aria-hidden="true">/</span><span>Account</span></nav>
+        {loading ? <p className="text-muted py-10" role="status">Loading your account…</p> : loadError ? <div className="min-w-0 border border-border rounded-[12px] py-[22px] px-[26px] bg-white [&_h2]:text-[19px] [&_h2]:font-semibold [&_h2]:tracking-[-.3px] [&_p]:text-[14px] [&_p]:text-muted [&_p]:leading-[1.7] [&_p]:mt-2 max-[760px]:p-5" role="alert"><p>{loadError}</p><button className="button-primary" onClick={loadUser}>Try again</button></div> : user && <div className="grid grid-cols-1 gap-[18px] [align-items:start] max-[760px]:grid-cols-1 max-[760px]:gap-5">
+            <section className="min-w-0 border border-border rounded-[12px] py-[22px] px-[26px] bg-white [&_h2]:text-[19px] [&_h2]:font-semibold [&_h2]:tracking-[-.3px] [&_p]:text-[14px] [&_p]:text-muted [&_p]:leading-[1.7] [&_p]:mt-2 max-[760px]:p-5" aria-labelledby="account-details-heading">
+                <div className="flex items-center justify-between gap-5"><h2 id="account-details-heading">Account Details</h2><button className="button-secondary" onClick={logout} disabled={Boolean(busy)}>Log out</button></div>
                 {logoutError && <p className="form-error" role="alert">{logoutError}</p>}
-                <dl className="account-details"><div><dt>Full name</dt><dd>{user.fullName}</dd></div><div><dt>Email address</dt><dd>{user.email}</dd></div></dl>
+                <dl className="grid grid-cols-2 gap-6 mt-[18px] [&_dt]:text-muted [&_dt]:text-[13px] [&_dt]:mb-1.5 [&_dd]:text-[17px] [&_dd]:text-ink [&_dd]:[overflow-wrap:anywhere] max-[760px]:grid-cols-1 max-[760px]:gap-[18px]"><div><dt>Full name</dt><dd>{user.fullName}</dd></div><div><dt>Email address</dt><dd>{user.email}</dd></div></dl>
                 
               </section>
-            <section className="account-card" aria-labelledby="password-heading">
+            <section className="min-w-0 border border-border rounded-[12px] py-[22px] px-[26px] bg-white [&_h2]:text-[19px] [&_h2]:font-semibold [&_h2]:tracking-[-.3px] [&_p]:text-[14px] [&_p]:text-muted [&_p]:leading-[1.7] [&_p]:mt-2 max-[760px]:p-5" aria-labelledby="password-heading">
               <h2 id="password-heading">Change password</h2><p>Use at least 8 characters. You’ll sign in again afterward.</p>
-              <form className="account-form" onSubmit={changePassword} aria-busy={busy === "password"}>
-                <fieldset className="account-password-fields" disabled={Boolean(busy)}>
-                  <div className="form-field"><label htmlFor="account-current-password">Current password</label><PasswordInput id="account-current-password" value={currentPassword} onChange={(event) => setCurrentPassword(event.target.value)} autoComplete="current-password" required /></div>
-                  <div className="form-field"><label htmlFor="account-new-password">New password</label><PasswordInput id="account-new-password" value={newPassword} onChange={(event) => setNewPassword(event.target.value)} autoComplete="new-password" required /></div>
-                  <div className="form-field"><label htmlFor="account-confirm-password">Confirm new password</label><PasswordInput id="account-confirm-password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} autoComplete="new-password" required /></div>
+              <form className="account-form mt-[18px] [&_fieldset]:min-w-0 [&_fieldset:disabled]:opacity-[.65]" onSubmit={changePassword} aria-busy={busy === "password"}>
+                <fieldset className="grid grid-cols-3 gap-x-5 [&_>_.form-error]:[grid-column:1_/_-1] [&_>_.button-primary]:[grid-column:1_/_-1] [&_>_.button-primary]:justify-self-start max-[760px]:grid-cols-1" disabled={Boolean(busy)}>
+                  <div className="form-field"><label htmlFor="account-current-password">Current password</label><PasswordInput id="account-current-password" value={currentPassword} onChange={event => setCurrentPassword(event.target.value)} autoComplete="current-password" required /></div>
+                  <div className="form-field"><label htmlFor="account-new-password">New password</label><PasswordInput id="account-new-password" value={newPassword} onChange={event => setNewPassword(event.target.value)} autoComplete="new-password" required /></div>
+                  <div className="form-field"><label htmlFor="account-confirm-password">Confirm new password</label><PasswordInput id="account-confirm-password" value={confirmPassword} onChange={event => setConfirmPassword(event.target.value)} autoComplete="new-password" required /></div>
                   {passwordError && <p className="form-error" role="alert">{passwordError}</p>}
                   <button className="button-primary" type="submit">{busy === "password" ? "Updating…" : "Update password"}</button>
                 </fieldset>
               </form>
             </section>
-            <section className="account-card account-danger" aria-labelledby="delete-heading">
+            <section className="min-w-0 border border-border rounded-[12px] py-[22px] px-[26px] bg-white [&_h2]:text-[19px] [&_h2]:font-semibold [&_h2]:tracking-[-.3px] [&_p]:text-[14px] [&_p]:text-muted [&_p]:leading-[1.7] [&_p]:mt-2 max-[760px]:p-5 bg-secondary-soft border-danger-border [&_h2]:text-danger grid grid-cols-[minmax(0,_1fr)_auto] gap-x-6 items-center [&_>_h2]:[grid-column:1] [&_>_p]:[grid-column:1] [&_>_p]:mt-1.5 [&_>_.button-danger]:[grid-column:2] [&_>_.button-danger]:[grid-row:1_/_3] [&_>_.button-danger]:mt-0 [&_>_.account-form]:[grid-column:1_/_-1] [&_>_.account-form]:border-t [&_>_.account-form]:border-danger-border [&_>_.account-form]:pt-5 max-[760px]:grid-cols-1 max-[760px]:[&_>_.button-danger]:[grid-column:1] max-[760px]:[&_>_.button-danger]:[grid-row:auto] max-[760px]:[&_>_.button-danger]:justify-self-start max-[760px]:[&_>_.button-danger]:mt-4" aria-labelledby="delete-heading">
                 <h2 id="delete-heading">Delete account</h2><p>Permanently delete your account and all notes. This cannot be undone.</p>
-                <button className="button-danger" disabled={Boolean(busy)} aria-expanded={deleting} aria-controls="delete-account-form" onClick={() => { setDeleting(!deleting); setDeletePassword(""); setConfirmed(false); setDeleteError(""); }}>{deleting ? "Cancel" : "Delete account"}</button>
-                {deleting && <form id="delete-account-form" className="account-form" onSubmit={deleteAccount} aria-busy={busy === "delete"}><fieldset disabled={Boolean(busy)}><div className="form-field"><label htmlFor="delete-password">Current password</label><PasswordInput id="delete-password" value={deletePassword} onChange={(event) => setDeletePassword(event.target.value)} autoComplete="current-password" required /></div><label className="account-confirmation"><input type="checkbox" checked={confirmed} onChange={(event) => setConfirmed(event.target.checked)} required /> I understand my account and notes will be permanently deleted.</label>{deleteError && <p className="form-error" role="alert">{deleteError}</p>}<button className="button-danger solid" type="submit" disabled={!confirmed}>{busy === "delete" ? "Deleting…" : "Permanently delete account"}</button></fieldset></form>}
+                <button className="button-danger" disabled={Boolean(busy)} aria-expanded={deleting} aria-controls="delete-account-form" onClick={() => {
+            setDeleting(!deleting);
+            setDeletePassword("");
+            setConfirmed(false);
+            setDeleteError("");
+          }}>{deleting ? "Cancel" : "Delete account"}</button>
+                {deleting && <form id="delete-account-form" className="account-form mt-[18px] [&_fieldset]:min-w-0 [&_fieldset:disabled]:opacity-[.65]" onSubmit={deleteAccount} aria-busy={busy === "delete"}><fieldset disabled={Boolean(busy)}><div className="form-field"><label htmlFor="delete-password">Current password</label><PasswordInput id="delete-password" value={deletePassword} onChange={event => setDeletePassword(event.target.value)} autoComplete="current-password" required /></div><label className="flex items-start gap-2.5 text-[14px] leading-[1.7] text-danger mb-5 [&_input]:mt-1.5 [&_input]:[accent-color:var(--color-danger)]"><input type="checkbox" checked={confirmed} onChange={event => setConfirmed(event.target.checked)} required /> I understand my account and notes will be permanently deleted.</label>{deleteError && <p className="form-error" role="alert">{deleteError}</p>}<button className="button-danger solid" type="submit" disabled={!confirmed}>{busy === "delete" ? "Deleting…" : "Permanently delete account"}</button></fieldset></form>}
               </section>
-          </div>
-        )}
+          </div>}
       </main>
-    </div>
-  );
+    </div>;
 };
 export default Account;

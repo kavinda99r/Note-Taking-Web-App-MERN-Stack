@@ -5,10 +5,8 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Main from "./pages/Main";
 import Account from "./pages/Account";
-
 function App() {
-  return (
-    <>
+  return <>
       <div>
         <Router>
           <Routes>
@@ -20,8 +18,6 @@ function App() {
           </Routes>
         </Router>
       </div>
-    </>
-  );
+    </>;
 }
-
 export default App;
