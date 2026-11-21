@@ -9,7 +9,7 @@ Use Node.js 20 or newer. Install dependencies in each app:
 ```powershell
 cd backend
 npm ci
-cd ../frontend/note-app
+cd ../frontend
 npm ci
 ```
 
@@ -27,7 +27,7 @@ From `backend`, run `npm run dev` for development or `npm start` for normal star
 
 ## Frontend
 
-From `frontend/note-app`, run `npm run dev`. The API URL is configured in `src/utils/constants.js` and defaults to `http://localhost:8000`.
+From `frontend`, run `npm run dev`. The API URL is configured in `src/utils/constants.js` and defaults to `http://localhost:8000`.
 
 UI icons use the locally installed Bootstrap Icons font through the shared `Icon` component. Tailwind provides the layout and styles.
 
