@@ -21,7 +21,7 @@ function installSessionStore() {
   const seed = (userId, version = 0, expiresAt = new Date(Date.now() + SESSION_AGE)) => {
     const token = randomBytes(32).toString("hex");
     sessions.set(hashToken(token), { tokenHash: hashToken(token), userId, tokenVersion: version, expiresAt });
-    return `${process.env.NODE_ENV === "production" ? "__Host-" : ""}notesnap_session=${token}`;
+    return `${(process.env.NODE_ENV === "production" || process.env.VERCEL === "1") ? "__Host-" : ""}notesnap_session=${token}`;
   };
   return { sessions, seed, model };
 }

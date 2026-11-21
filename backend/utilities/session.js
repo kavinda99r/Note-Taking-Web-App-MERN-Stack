@@ -1,8 +1,9 @@
 const { randomBytes, createHash } = require("node:crypto");
 const Session = require("../models/session.model");
 const SESSION_AGE = 365 * 24 * 60 * 60 * 1000;
-const cookieName = () => process.env.NODE_ENV === "production" ? "__Host-notesnap_session" : "notesnap_session";
-const cookieOptions = () => ({ httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/" });
+const productionCookies = () => process.env.NODE_ENV === "production" || process.env.VERCEL === "1";
+const cookieName = () => productionCookies() ? "__Host-notesnap_session" : "notesnap_session";
+const cookieOptions = () => ({ httpOnly: true, secure: productionCookies(), sameSite: "lax", path: "/" });
 const hashToken = (token) => createHash("sha256").update(token).digest("hex");
 function readToken(req) {
   const matches = (req.headers.cookie || "").split(";").map((part) => part.trim()).filter((part) => part.startsWith(cookieName() + "="));
