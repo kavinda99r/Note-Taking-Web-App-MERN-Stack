@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { LuCheck } from "react-icons/lu";
-import { MdDeleteOutline } from "react-icons/md";
+import PropTypes from "prop-types";
+import Icon from "../Icon/Icon";
+import { useEffect } from "react";
 
 const Toast = ({ isShown, message, type, onclose }) => {
   useEffect(() => {
@@ -31,9 +31,9 @@ const Toast = ({ isShown, message, type, onclose }) => {
             }`}
           >
             {type === "delete" ? (
-              <MdDeleteOutline className="text-xl text-red-500" />
+              <Icon name="trash" label="Delete" className="text-xl text-red-500" />
             ) : (
-              <LuCheck className="text-xl text-green-500" />
+              <Icon name="check-lg" label="Success" className="text-xl text-green-500" />
             )}
           </div>
 
@@ -42,6 +42,13 @@ const Toast = ({ isShown, message, type, onclose }) => {
       </div>
     </div>
   );
+};
+
+Toast.propTypes = {
+  isShown: PropTypes.bool,
+  message: PropTypes.string,
+  type: PropTypes.string,
+  onclose: PropTypes.func.isRequired
 };
 
 export default Toast;

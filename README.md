@@ -1,68 +1,57 @@
-# NoteSnap - Note-Taking Web Application using MERN Stack ✅
+# NoteSnap
 
-This is a full-stack Note-taking application built using the MERN stack (MongoDB, Express, React, Node.js). The app provides a clean and simple user interface, allowing users to easily create, edit, and delete notes.
+A note-taking app built with React, Express and MongoDB. Create, edit, search, delete and pin notes.
 
-<h3>Key Features ✨</h3>
+## Setup
 
-- Add Notes: Create new notes with titles, descriptions and tags.
-- Edit Notes: Modify existing notes with ease.
-- Delete Notes: Permanently remove notes that are no longer needed.
-- Search Notes: Quickly find notes using the search functionality.
-- Pin Notes: Mark important notes to pin them to the top of your list.
+Use Node.js 20 or newer. Install dependencies in each app:
 
-<h3>Tech Stack 🛠️</h3>
-
-- Frontend: ReactJS with Tailwind CSS
-- Backend: Node.js with ExpressJS
-- Database: MongoDB
-
-<br>
-
-<h2>Installation Guide 💻</h2>
-1. Extract the project folder. <br>
-2. Open the folder in VS Code. 
-
-
-
-<h3>Install Dependencies</h3>
-
-<h4>1. Navigate to the frontend directory and install dependencies</h4>
-
-```
-cd frontend/note-app
-```
-```
-npm i
-```
-
-<h4>2. Install backend dependencies</h4>
-
-```
-cd ../backend
-```
-```
-npm i
-```
-
-<h3>Running the Application</h3>
-<h4>1. To run the backend, open a new terminal and use</h4>
-<p>If you are already in the backend directory, run this in the terminal.</p>
-
-```
-npm start
-```
-
-<h4>2. To run the frontend, use the following commands</h4>
-
-```
+```powershell
+cd backend
+npm ci
 cd ../frontend/note-app
-```
-```
-npm run dev
+npm ci
 ```
 
-<h2> </h2>
+## Backend configuration
 
-<h3>Happy Coding! 🎉</h3>
+For a fresh checkout, copy `backend/.env.example` to `backend/.env`. Set:
 
----
+- `MONGODB_URI`: your MongoDB connection URL.
+- `ACCESS_TOKEN_SECRET`: a long random JWT signing secret.
+- `PORT`: optional; defaults to 8000.
+
+The server loads the environment file relative to its own folder and connects to MongoDB before accepting requests. Keep credentials in the ignored local `.env` file. Previously committed credentials remain in Git history and should be rotated separately.
+
+From `backend`, run `npm run dev` for development or `npm start` for normal startup.
+
+## Frontend
+
+From `frontend/note-app`, run `npm run dev`. The API URL is configured in `src/utils/constants.js` and defaults to `http://localhost:8000`.
+
+UI icons use the locally installed Bootstrap Icons font through the shared `Icon` component. Tailwind provides the layout and styles.
+
+## Backend layout
+
+```text
+backend/
+  app.js                        Express setup and route mounting
+  index.js                      Environment loading and server startup
+  config/database.js            MongoDB connection
+  controllers/                  Authentication and note request handlers
+  middleware/                   Token checks, async wrapper and error responses
+  models/                       Mongoose schemas
+  routes/                       Authentication and note endpoints
+  tests/                        HTTP integration tests with mocked models
+```
+
+Existing endpoints are preserved: `/create-account`, `/login`, `/get-user`, `/add-note`, `/edit-note/:noteId`, `/get-all-notes`, `/delete-notes/:noteId`, `/update-note-pinned/:noteId` and `/search-notes`.
+
+## Verification
+
+- Backend: `npm test` (does not connect to MongoDB).
+- Frontend: `npm run lint` and `npm run build`.
+
+## Outstanding security work
+
+Password hashing, password removal from JWTs/signup responses, credential rotation and dependency vulnerability remediation require approval. The structural refactor preserves the existing authentication behavior.

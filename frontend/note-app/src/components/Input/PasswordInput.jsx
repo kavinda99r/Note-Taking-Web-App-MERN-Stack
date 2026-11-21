@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
+import PropTypes from "prop-types";
+import Icon from "../Icon/Icon";
+import { useState } from "react";
 
 const PasswordInput = ({ value, onChange, placeholder }) => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -19,20 +20,24 @@ const PasswordInput = ({ value, onChange, placeholder }) => {
       />
 
       {isShowPassword ? (
-        <FaRegEye
-          size={22}
+        <Icon name="eye" label="Hide password"
           className="text-primary cursor-pointer"
           onClick={() => toggleShowPassword()}
         />
       ) : (
-        <FaRegEyeSlash
-          size={22}
+        <Icon name="eye-slash" label="Show password"
           className="text-slate-400 cursor-pointer"
           onClick={() => toggleShowPassword()}
         />
       )}
     </div>
   );
+};
+
+PasswordInput.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  placeholder: PropTypes.string
 };
 
 export default PasswordInput;

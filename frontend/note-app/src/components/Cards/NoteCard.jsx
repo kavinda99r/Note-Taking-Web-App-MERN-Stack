@@ -1,7 +1,5 @@
-import React from "react";
-import { MdOutlinePushPin } from "react-icons/md";
-import { MdCreate, MdDelete } from "react-icons/md";
-import moment from "moment";
+import PropTypes from "prop-types";
+import Icon from "../Icon/Icon";
 
 const NoteCard = ({
   title,
@@ -20,11 +18,11 @@ const NoteCard = ({
           <div>
             <h6 className="text-sm font-medium">{title}</h6>
             <span className="text-xs text-slate-500">
-              {moment(date).format("Do MM YYYY")}
+              {new Intl.DateTimeFormat(undefined, { day: "numeric", month: "short", year: "numeric" }).format(new Date(date))}
             </span>
           </div>
 
-          <MdOutlinePushPin
+          <Icon name="pin-angle" label="Toggle pin"
             className={`icon-btn ${
               isPinned ? "text-primary" : "text-slate-300"
             }`}
@@ -39,11 +37,11 @@ const NoteCard = ({
           </div>
 
           <div className="flex items-center gap-2">
-            <MdCreate
+            <Icon name="pencil" label="Edit note"
               className="icon-btn hover:text-green-600"
               onClick={onEdit}
             />
-            <MdDelete
+            <Icon name="trash" label="Delete note"
               className="icon-btn hover:text-red-500"
               onClick={onDelete}
             />
@@ -52,6 +50,17 @@ const NoteCard = ({
       </div>
     </>
   );
+};
+
+NoteCard.propTypes = {
+  title: PropTypes.string,
+  date: PropTypes.string,
+  content: PropTypes.string,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isPinned: PropTypes.bool,
+  onEdit: PropTypes.func,
+  onDelete: PropTypes.func,
+  onPinNote: PropTypes.func
 };
 
 export default NoteCard;

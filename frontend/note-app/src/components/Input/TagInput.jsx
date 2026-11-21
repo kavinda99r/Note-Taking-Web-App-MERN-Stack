@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { MdAdd, MdClose } from "react-icons/md";
+import PropTypes from "prop-types";
+import Icon from "../Icon/Icon";
+import { useState } from "react";
 
 const TagInput = ({ tags, setTags }) => {
   const [inputValue, setInputValue] = useState("");
@@ -36,11 +37,12 @@ const TagInput = ({ tags, setTags }) => {
             >
               # {tag}
               <button
+                aria-label={`Remove tag ${tag}`}
                 onClick={() => {
                   handleRemoveTag(tag);
                 }}
               >
-                <MdClose />
+                <Icon name="x-lg" label="Close" />
               </button>
             </span>
           ))}
@@ -57,14 +59,20 @@ const TagInput = ({ tags, setTags }) => {
           onKeyDown={handleKeyDown}
         />
         <button
+          aria-label="Add tag"
           className="w-8 h-8 flex items-center justify-center rounded border border-blue-700 hover:bg-blue-700"
           onClick={addNewTag}
         >
-          <MdAdd className="text-2xl text-blue-700 hover:text-white" />
+          <Icon name="plus-lg" label="Add" className="text-2xl text-blue-700 hover:text-white" />
         </button>
       </div>
     </div>
   );
+};
+
+TagInput.propTypes = {
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setTags: PropTypes.func.isRequired
 };
 
 export default TagInput;

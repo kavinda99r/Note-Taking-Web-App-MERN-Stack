@@ -1,6 +1,5 @@
-import React from "react";
+import Icon from "../../components/Icon/Icon";
 import { Link } from "react-router-dom"; 
-import { GiNotebook } from "react-icons/gi";
 
 const Main = () => {
   return (
@@ -13,7 +12,7 @@ const Main = () => {
       <div className="text-center max-w-4xl px-10 py-14 bg-white drop-shadow-md rounded-lg ">
         <h1 className="text-6xl font-bold text-gray-900 mb-2 flex justify-center">
           Welcome to <span className="text-blue-500 ml-3">Note</span>Snap
-          <GiNotebook />
+          <Icon name="journal-text" label="Notebook" />
         </h1>
         <h1 className="text-2xl font-bold text-gray-700 mb-4 ">
           Your Ultimate Note-Taking Companion

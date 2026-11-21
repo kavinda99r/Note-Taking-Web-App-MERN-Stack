@@ -1,6 +1,5 @@
-import React from "react";
-import { FaMagnifyingGlass } from "react-icons/fa6";
-import { IoMdClose } from "react-icons/io";
+import PropTypes from "prop-types";
+import Icon from "../Icon/Icon";
 
 const SearchBar = ({ value, onChange, handleSearch, onClearSearch }) => {
   return (
@@ -15,19 +14,26 @@ const SearchBar = ({ value, onChange, handleSearch, onClearSearch }) => {
         />
 
         {value && (
-          <IoMdClose
+          <Icon name="x-lg" label="Clear search"
             className="text-xl text-slate-500 cursor-pointer hover:text-black mr-3"
             onClick={onClearSearch}
           />
         )}
 
-        <FaMagnifyingGlass
+        <Icon name="search" label="Search"
           className="text-slate-400 cursor-pointer hover:text-black"
           onClick={handleSearch}
         />
       </div>
     </>
   );
+};
+
+SearchBar.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  handleSearch: PropTypes.func,
+  onClearSearch: PropTypes.func
 };
 
 export default SearchBar;

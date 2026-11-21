@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 import { getInitials } from "../../utils/helper";
 
 const ProfileInfo = ({ userInfo, onLogout }) => {
@@ -21,6 +21,11 @@ const ProfileInfo = ({ userInfo, onLogout }) => {
       </div>
     )
   );
+};
+
+ProfileInfo.propTypes = {
+  userInfo: PropTypes.shape({ fullName: PropTypes.string }),
+  onLogout: PropTypes.func
 };
 
 export default ProfileInfo;

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import PropTypes from "prop-types";
+import Icon from "../../components/Icon/Icon";
+import { useState } from "react";
 import TagInput from "../../components/Input/TagInput";
-import { MdClose } from "react-icons/md";
 import axiosInstance from "../../utils/axiosInstance";
 
 const AddEditNotes = ({
@@ -37,6 +38,8 @@ const AddEditNotes = ({
         error.response.data.message
       ) {
         setError(error.response.data.message);
+      } else {
+        setError("Unable to save the note. Please try again.");
       }
     }
   };
@@ -63,17 +66,19 @@ const AddEditNotes = ({
         error.response.data.message
       ) {
         setError(error.response.data.message);
+      } else {
+        setError("Unable to save the note. Please try again.");
       }
     }
   };
 
   const handleAddNote = () => {
-    if (!title) {
+    if (!title.trim()) {
       setError("Please enter the title");
       return;
     }
 
-    if (!content) {
+    if (!content.trim()) {
       setError("Please enter the content");
       return;
     }
@@ -91,10 +96,11 @@ const AddEditNotes = ({
     <>
       <div className="relative">
         <button
+          aria-label="Close note editor"
           className="w-10 h-10 rounded-full flex items-center justify-center absolute -top-3 -right-3 hover:bg-slate-50"
           onClick={onclose}
         >
-          <MdClose className="text-xl text-slate-400" />
+          <Icon name="x-lg" label="Close" className="text-xl text-slate-400" />
         </button>
 
         <div className="flex flex-col gap-2">
@@ -137,6 +143,17 @@ const AddEditNotes = ({
       </div>
     </>
   );
+};
+
+AddEditNotes.propTypes = {
+  noteData: PropTypes.shape({ _id: PropTypes.string,
+  title: PropTypes.string,
+  content: PropTypes.string,
+  tags: PropTypes.arrayOf(PropTypes.string) }),
+  getALLNotes: PropTypes.func.isRequired,
+  type: PropTypes.string,
+  onclose: PropTypes.func.isRequired,
+  showToastMessage: PropTypes.func.isRequired
 };
 
 export default AddEditNotes;

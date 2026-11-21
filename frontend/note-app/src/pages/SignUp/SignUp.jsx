@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import PasswordInput from "../../components/Input/PasswordInput";
 import axiosInstance from "../../utils/axiosInstance";
+import { validateEmail } from "../../utils/helper";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -15,11 +16,11 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    if (!name) {
+    if (!name.trim()) {
       setError("Please enter your name");
       return;
     }
-    if (!email) {
+    if (!validateEmail(email)) {
       setError("Please enter a valid email address");
       return;
     }

@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import Icon from "../../components/Icon/Icon";
+import { useCallback, useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import NoteCard from "../../components/Cards/NoteCard";
-import { MdAdd } from "react-icons/md";
 import AddEditNotes from "./AddEditNotes";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import axiosInstance from "../../utils/axiosInstance";
 import Toast from "../../components/ToastMessage/Toast";
 import EmptyCard from "../../components/EmptyCard/EmptyCard";
-import AddNoteImg from "../../assets/Add Note.png";
-import NoDataImg from "../../assets/No Result.png";
 
 const Home = () => {
   const [openAddEditModal, setOpenAddEditModal] = useState({
@@ -51,19 +48,19 @@ const Home = () => {
   };
 
   //Get user info
-  const getUserInfo = async () => {
+  const getUserInfo = useCallback(async () => {
     try {
       const response = await axiosInstance.get("/get-user");
       if (response.data && response.data.user) {
         setUserInfo(response.data.user);
       }
     } catch (error) {
-      if (error.response.status == 401) {
-        localStorage.clear();
+      if ([401, 403].includes(error.response?.status)) {
+        localStorage.removeItem("token");
         navigate("/login");
       }
     }
-  };
+  }, [navigate]);
 
   //Get all notes
   const getALLNotes = async () => {
@@ -73,7 +70,7 @@ const Home = () => {
       if (response.data && response.data.notes) {
         setAllNotes(response.data.notes);
       }
-    } catch (error) {
+    } catch {
       console.log("An unexpected error occurred. Please try again.");
     }
   };
@@ -144,8 +141,7 @@ const Home = () => {
   useEffect(() => {
     getALLNotes();
     getUserInfo();
-    return () => {};
-  }, []);
+  }, [getUserInfo]);
 
   return (
     <>
@@ -158,7 +154,7 @@ const Home = () => {
       <div className="container mx-auto py-6">
         {allNotes.length > 0 ? (
           <div className="grid grid-cols-3 gap-4 mt-8 mx-8">
-            {allNotes.map((item, index) => (
+            {allNotes.map((item) => (
               <NoteCard
                 key={item._id}
                 title={item.title}
@@ -174,40 +170,37 @@ const Home = () => {
           </div>
         ) : (
           <EmptyCard
-            imgSrc={isSearch ? NoDataImg : AddNoteImg}
+            icon={isSearch ? "search" : "journal-plus"}
             message={
               isSearch
                 ? `Looks like we didn't find any notes matching your search. Give it another try!`
                 : `Get started with your first note! Click the 'Add' button to write down your thoughts, ideas, and reminders.`
             }
-
-            /* reference={
-              isSearch
-                ? `"https://www.flaticon.com/free-icons/no-results" - No results icons created by Freepik - Flaticon`
-                : `"https://www.flaticon.com/free-icons/add-document" - Add document icons created by Nur syifa fauziah - Flaticon`
-            } */
           />
         )}
       </div>
 
       <button
+        aria-label="Add note"
         className="w-16 h-16 flex items-center justify-center rounded-2xl bg-primary hover:bg-blue-600 absolute right-10 bottom-10"
         onClick={() => {
           setOpenAddEditModal({ isShown: true, type: "add", data: null });
         }}
       >
-        <MdAdd className="text-[32px] text-white" />
+        <Icon name="plus-lg" label="Add" className="text-[32px] text-white" />
       </button>
 
       <Modal
         isOpen={openAddEditModal.isShown}
-        onRequestClose={() => {}}
+        onRequestClose={() => {
+          setOpenAddEditModal({ isShown: false, type: "add", data: null });
+        }}
         style={{
           overlay: {
             backgroundColor: "rgba(0,0,0,0.2)",
           },
         }}
-        contentLabels=""
+        contentLabel={openAddEditModal.type === "edit" ? "Edit note" : "Add note"}
         className="w-[40%] max-h-3/4 bg-white rounded-md mx-auto mt-14 p-5 overflow-scroll"
       >
         <AddEditNotes

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import PropTypes from "prop-types";
+import Icon from "../Icon/Icon";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import ProfileInfo from "../Cards/ProfileInfo";
 import { useNavigate, useLocation } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
-import { IoHome } from "react-icons/io5";
 
 const Navbar = ({ userInfo, onSearchNote, handleClearSearch }) => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const Navbar = ({ userInfo, onSearchNote, handleClearSearch }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const onLogout = () => {
-    localStorage.clear();
+    localStorage.removeItem("token");
     navigate("/login");
   };
 
@@ -39,7 +40,7 @@ const Navbar = ({ userInfo, onSearchNote, handleClearSearch }) => {
       {isAuthPage && (
         <Link to="/">
           <button className="flex  items-center gap-2 text-slate-900 border-[1px] border-slate-900 rounded-[4px] py-1 px-3 hover:bg-slate-100 transition-all ease-in-out duration-200">
-            <IoHome />
+            <Icon name="house" label="Home" />
             Home
           </button>
         </Link>
@@ -58,6 +59,12 @@ const Navbar = ({ userInfo, onSearchNote, handleClearSearch }) => {
       <ProfileInfo userInfo={userInfo} onLogout={onLogout} />
     </div>
   );
+};
+
+Navbar.propTypes = {
+  userInfo: PropTypes.shape({ fullName: PropTypes.string }),
+  onSearchNote: PropTypes.func,
+  handleClearSearch: PropTypes.func
 };
 
 export default Navbar;
