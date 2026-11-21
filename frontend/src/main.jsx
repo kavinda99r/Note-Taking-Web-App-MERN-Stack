@@ -1,3 +1,4 @@
+import './theme.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'

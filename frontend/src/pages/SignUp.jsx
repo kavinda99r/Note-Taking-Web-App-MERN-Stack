@@ -74,20 +74,20 @@ const SignUp = () => {
         <span className="auth-form-icon"><Icon name="journal-plus" /></span>
         <h1>Your fresh start.</h1>
         <p className="auth-form-description">Create your account and give your ideas a home.</p>
-          <div className="auth-field">
+          <div className="form-field">
             <label htmlFor="signup-name">Full name</label>
             <input id="signup-name" type="text" autoComplete="name" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} required />
           </div>
-        <div className="auth-field">
+        <div className="form-field">
           <label htmlFor="signup-email">Email address</label>
           <input id="signup-email" type="email" autoComplete="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </div>
-        <div className="auth-field">
+        <div className="form-field">
           <label htmlFor="signup-password">Password</label>
           <PasswordInput id="signup-password" autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Create a password" required />
         </div>
-        {error && <p className="auth-error" role="alert">{error}</p>}
-        <button type="submit" className="auth-submit" disabled={isSubmitting}>
+        {error && <p className="form-error" role="alert">{error}</p>}
+        <button type="submit" className="button-primary auth-submit" disabled={isSubmitting}>
           {isSubmitting ? "Creating your account…" : "Create account"}
         </button>
         <p className="auth-form-switch">Already have an account?{" "}<Link to="/login">Log in</Link></p>

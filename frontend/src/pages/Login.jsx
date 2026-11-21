@@ -66,16 +66,16 @@ const Login = () => {
         <h1>Welcome back.</h1>
         {state?.notice && <p className="auth-notice" role="status">{state.notice}</p>}
         <p className="auth-form-description">Your ideas are right where you left them.</p>
-        <div className="auth-field">
+        <div className="form-field">
           <label htmlFor="login-email">Email address</label>
           <input id="login-email" type="email" autoComplete="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </div>
-        <div className="auth-field">
+        <div className="form-field">
           <label htmlFor="login-password">Password</label>
           <PasswordInput id="login-password" autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter your password" required />
         </div>
-        {error && <p className="auth-error" role="alert">{error}</p>}
-        <button type="submit" className="auth-submit" disabled={isSubmitting}>
+        {error && <p className="form-error" role="alert">{error}</p>}
+        <button type="submit" className="button-primary auth-submit" disabled={isSubmitting}>
           {isSubmitting ? "Logging in…" : "Log in"}
         </button>
         <p className="auth-form-switch">New here?{" "}<Link to="/signup">Create an account</Link></p>

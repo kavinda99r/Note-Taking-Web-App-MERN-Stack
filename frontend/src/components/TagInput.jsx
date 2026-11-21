@@ -2,6 +2,23 @@ import PropTypes from "prop-types";
 import Icon from "./Icon";
 import { useState } from "react";
 
+const styles = `
+.tag-input-chip {
+  background: var(--color-soft);
+  color: var(--color-primary);
+}
+.tag-input-add {
+  border: 1px solid var(--color-accent-muted);
+  color: var(--color-primary);
+  background: var(--color-soft);
+  transition: background .15s, color .15s;
+}
+.tag-input-add:hover {
+  background: var(--color-primary);
+  color: white;
+}
+`;
+
 const TagInput = ({ tags, setTags }) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -29,12 +46,13 @@ const TagInput = ({ tags, setTags }) => {
 
   return (
     <div>
+      <style>{styles}</style>
       {tags?.length > 0 && (
         <div className="flex items-center gap-2 flex-wrap mt-2">
           {tags.map((tag, index) => (
             <span
               key={index}
-              className="flex items-center gap-2 text-sm text-slate-900 bg-slate-100 px-3 py-1 rounded "
+              className="tag-input-chip flex items-center gap-2 text-sm px-3 py-1 rounded"
             >
               # {tag}
               <button type="button"
@@ -62,10 +80,10 @@ const TagInput = ({ tags, setTags }) => {
         />
         <button type="button"
           aria-label="Add tag"
-          className="w-8 h-8 flex items-center justify-center rounded border border-blue-700 hover:bg-blue-700"
+          className="tag-input-add w-8 h-8 flex items-center justify-center rounded"
           onClick={addNewTag}
         >
-          <Icon name="plus-lg" label="Add" className="text-2xl text-blue-700 hover:text-white" />
+          <Icon name="plus-lg" label="Add" className="text-xl" />
         </button>
       </div>
     </div>

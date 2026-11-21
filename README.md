@@ -31,6 +31,12 @@ From `frontend`, run `npm run dev`. The API URL defaults to `http://localhost:80
 
 UI icons use the locally installed Bootstrap Icons font through the shared `Icon` component. Tailwind provides the layout and styles.
 
+## Frontend styling
+
+- `src/index.css` contains Tailwind directives, typography and base browser styles.
+- `src/theme.css` contains shared color tokens, button variants, input fields, validation messages and common tags/modal actions.
+- Page and component styles, including responsive rules, live in their owning JSX file through a local `styles` constant and a style element. The external Bootstrap Icons font stylesheet remains a package dependency.
+
 ## Backend layout
 
 ```text

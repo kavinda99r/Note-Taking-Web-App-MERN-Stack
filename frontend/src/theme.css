@@ -1,0 +1,58 @@
+:root {
+  --color-primary: #2563eb;
+  --color-primary-hover: #1c4fca;
+  --color-accent-muted: #d7e3fc;
+  --color-highlight: #dbe7ff;
+  --color-secondary: #ef863e;
+  --color-accent: #8eab88;
+  --color-secondary-ink: #805b27;
+  --color-ink: #192a34;
+  --color-muted: #65717a;
+  --color-base: #fbfcfa;
+  --color-surface: #ffffff;
+  --color-soft: #edf2ff;
+  --color-secondary-soft: #f7ecdd;
+  --color-border: #e4e9e4;
+  --color-focus: #7d9de2;
+  --color-danger: #b42323;
+  --color-danger-hover: #941d1d;
+  --color-danger-soft: #fff1f1;
+  --color-danger-border: #ffd8d8;
+  --color-primary-ring: #2563eb12;
+  --color-primary-shadow: #2563eb18;
+  --color-primary-glow: #2563eb55;
+}
+:root { --button-padding-y: 10px; --button-padding-x: 20px; }
+.button-primary, .button-secondary, .button-danger {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  padding: var(--button-padding-y) var(--button-padding-x); border-radius: 9px;
+  font-size: 14px; font-weight: 500; line-height: 1.5;
+}
+.button-primary { background: var(--color-primary); color: white; box-shadow: 0 5px 12px var(--color-primary-shadow); }
+.button-primary:hover { background: var(--color-primary-hover); }
+.button-secondary { border: 1px solid var(--color-border); color: var(--color-muted); min-width: 96px; }
+.button-secondary:hover { background: var(--color-soft); }
+.button-danger { border: 1px solid var(--color-danger-border); color: var(--color-danger); }
+.button-danger:hover { background: var(--color-danger-soft); }
+.button-danger.solid { background: var(--color-danger); border-color: var(--color-danger); color: white; }
+.button-danger.solid:hover { background: var(--color-danger-hover); }
+.button-primary:disabled, .button-secondary:disabled, .button-danger:disabled { opacity: .55; cursor: not-allowed; }
+.form-field { margin-bottom: 18px; }
+.form-field label { display: block; color: var(--color-ink); font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+.form-field > input, .form-field > textarea, .password-field {
+  width: 100%; border: 1px solid var(--color-border); background: var(--color-base);
+  border-radius: 9px; color: var(--color-ink); transition: border-color .15s, box-shadow .15s;
+}
+.form-field > input, .form-field > textarea { padding: 13px 14px; font-size: 16px; outline: none; }
+.form-field > textarea { min-height: 170px; resize: vertical; line-height: 1.7; }
+.form-field input::placeholder, .form-field textarea::placeholder { color: var(--color-muted); }
+.form-field > input:focus, .form-field > textarea:focus, .password-field:focus-within { border-color: var(--color-focus); box-shadow: 0 0 0 3px var(--color-primary-ring); }
+.password-field { display: flex; align-items: center; padding-inline: 14px; }
+.password-field input { width: 100%; min-width: 0; padding-block: 13px; margin-right: 12px; outline: none; background: transparent; font-size: 16px; }
+.password-field button { min-width: 24px; min-height: 30px; color: var(--color-muted); }
+.form-error { color: var(--color-danger); background: var(--color-danger-soft); border: 1px solid var(--color-danger-border); padding: 10px 12px; border-radius: 8px; margin-bottom: 18px; font-size: 14px; line-height: 1.6; }
+@media (prefers-reduced-motion: reduce) { .form-field input, .form-field textarea, .password-field { transition: none; } }
+
+.note-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 20px; }
+.note-tags span { padding: 4px 7px; background: var(--color-soft); color: var(--color-muted); font-size: 11px; border-radius: 5px; overflow-wrap: anywhere; max-width: 100%; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 12px; padding-top: 25px; margin-top: 25px; border-top: 1px solid var(--color-border); }

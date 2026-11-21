@@ -2,6 +2,13 @@ import PropTypes from "prop-types";
 import Icon from "./Icon";
 import { useState } from "react";
 
+const styles = `
+.password-toggle {
+  color: var(--color-muted);
+}
+`;
+
+
 const PasswordInput = ({ value, onChange, placeholder, id, autoComplete = "current-password", required = false }) => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -10,7 +17,8 @@ const PasswordInput = ({ value, onChange, placeholder, id, autoComplete = "curre
   };
 
   return (
-    <div className="password-field flex items-center bg-transparent border-[1.5px] px-5 rounded mb-3">
+    <div className="password-field">
+      <style>{styles}</style>
       <input
         value={value}
         id={id}
@@ -19,7 +27,7 @@ const PasswordInput = ({ value, onChange, placeholder, id, autoComplete = "curre
         onChange={onChange}
         type={isShowPassword ? "text" : "password"}
         placeholder={placeholder || "Password"}
-        className="w-full text-sm bg-transparent py-3 mr-3 rounded outline-none"
+
       />
 
       {isShowPassword ? (
@@ -29,7 +37,7 @@ const PasswordInput = ({ value, onChange, placeholder, id, autoComplete = "curre
         />
       ) : (
         <Icon name="eye-slash" label="Show password"
-          className="text-slate-400 cursor-pointer"
+          className="password-toggle cursor-pointer"
           onClick={() => toggleShowPassword()}
         />
       )}
