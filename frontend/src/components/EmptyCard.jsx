@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import Icon from "../Icon/Icon";
+import Icon from "./Icon";
 
 const EmptyCard = ({ icon, message }) => (
   <div className="flex flex-col items-center justify-center h-[550px]">

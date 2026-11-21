@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const controller = require("../controllers/note.controller");
-const { authenticateToken } = require("../middleware/authenticateToken");
+const { authenticateSession } = require("../middleware/authenticateSession");
 const asyncHandler = require("../middleware/asyncHandler");
 
-router.use(authenticateToken);
+router.use(authenticateSession);
 
 router.post("/add-note", asyncHandler(controller.addNote));
 router.put("/edit-note/:noteId", asyncHandler(controller.editNote));

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import Icon from "../Icon/Icon";
+import Icon from "./Icon";
 import { useState } from "react";
 
 const TagInput = ({ tags, setTags }) => {
@@ -18,6 +18,7 @@ const TagInput = ({ tags, setTags }) => {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
+      e.preventDefault();
       addNewTag();
     }
   };
@@ -36,7 +37,7 @@ const TagInput = ({ tags, setTags }) => {
               className="flex items-center gap-2 text-sm text-slate-900 bg-slate-100 px-3 py-1 rounded "
             >
               # {tag}
-              <button
+              <button type="button"
                 aria-label={`Remove tag ${tag}`}
                 onClick={() => {
                   handleRemoveTag(tag);
@@ -53,12 +54,13 @@ const TagInput = ({ tags, setTags }) => {
         <input
           type="text"
           className="text-sm bg-transparent border py-2 rounded outline-none"
-          placeholder="Add tags"
+          placeholder="Add a tag"
+          aria-label="New tag"
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         />
-        <button
+        <button type="button"
           aria-label="Add tag"
           className="w-8 h-8 flex items-center justify-center rounded border border-blue-700 hover:bg-blue-700"
           onClick={addNewTag}

@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
-import Icon from "../Icon/Icon";
+import Icon from "./Icon";
 import { useState } from "react";
 
-const PasswordInput = ({ value, onChange, placeholder }) => {
+const PasswordInput = ({ value, onChange, placeholder, id, autoComplete = "current-password", required = false }) => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const toggleShowPassword = () => {
@@ -10,9 +10,12 @@ const PasswordInput = ({ value, onChange, placeholder }) => {
   };
 
   return (
-    <div className="flex items-center bg-transparent border-[1.5px] px-5 rounded mb-3">
+    <div className="password-field flex items-center bg-transparent border-[1.5px] px-5 rounded mb-3">
       <input
         value={value}
+        id={id}
+        autoComplete={autoComplete}
+        required={required}
         onChange={onChange}
         type={isShowPassword ? "text" : "password"}
         placeholder={placeholder || "Password"}
@@ -37,7 +40,10 @@ const PasswordInput = ({ value, onChange, placeholder }) => {
 PasswordInput.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  id: PropTypes.string,
+  autoComplete: PropTypes.string,
+  required: PropTypes.bool
 };
 
 export default PasswordInput;

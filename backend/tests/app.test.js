@@ -1,15 +1,15 @@
 const { test, before, after } = require("node:test");
 const assert = require("node:assert/strict");
-const jwt = require("jsonwebtoken");
+const { installSessionStore } = require("./helpers/mockSession");
+const sessionStore = installSessionStore();
 
-process.env.ACCESS_TOKEN_SECRET = "test-only-secret";
 let noteFilter;
 let saved;
 const userPath = require.resolve("../models/user.model");
 const notePath = require.resolve("../models/note.model");
 require.cache[userPath] = {
   id: userPath, filename: userPath, loaded: true,
-  exports: { findOne: async () => { throw new Error("private database details"); } },
+  exports: { findOne: async (filter) => { if (filter._id) return { _id: filter._id, tokenVersion: 0 }; throw new Error("private database details"); } },
 };
 require.cache[notePath] = {
   id: notePath, filename: notePath, loaded: true,
@@ -44,10 +44,10 @@ test("all note routes require authentication", async () => {
 });
 
 test("edit route supports unpinning and scopes lookup to the signed-in user", async () => {
-  const token = jwt.sign({ user: { _id: "owner" } }, process.env.ACCESS_TOKEN_SECRET);
+  const cookie = sessionStore.seed("owner");
   const response = await fetch(baseUrl + "/edit-note/note-id", {
     method: "PUT",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    headers: { "Content-Type": "application/json", Cookie: cookie, "X-Requested-With": "XMLHttpRequest" },
     body: JSON.stringify({ isPinned: false }),
   });
   assert.equal(response.status, 200);
