@@ -1,8 +1,7 @@
 import Icon from "../components/Icon";
 import { Link } from "react-router-dom";
 
-// Set this to the video URL or a public asset path when the video is ready.
-const demoVideoSrc = "";
+
 const Main = () => <div className="text-ink bg-base min-h-[100svh] flex flex-col font-sans [&_*]:box-border [&_*::before]:box-border [&_*::after]:box-border [&_main]:flex-1 [&_main]:flex [&_main]:flex-col [&_a]:no-underline [&_a:focus-visible]:[outline:3px_solid_var(--color-primary)] [&_a:focus-visible]:[outline-offset:6px]">
     <a className="fixed top-[-80px] left-4 py-3 px-5 bg-white z-[10] focus:top-3" href="#main-content">Skip to content</a>
     <header className="min-h-20 flex justify-between items-center gap-6 [border-bottom:1px_solid_var(--color-border)] [&_nav]:flex [&_nav]:items-center [&_nav]:gap-[30px] [&_nav]:text-[14px] [&_nav]:font-medium [&_nav_>_a:not(.landing-button)]:text-ink [&_nav_>_a:not(.landing-button):hover]:text-primary max-[540px]:min-h-[82px] max-[540px]:gap-3 max-[540px]:[&_nav]:gap-4 max-[540px]:[&_.landing-button]:py-2.5 max-[540px]:[&_.landing-button]:px-3 max-[540px]:[&_.landing-button]:text-[12px] max-[540px]:[&_nav]:text-[13px] w-[min(1240px,_calc(100%_-_96px))] mx-auto max-[1050px]:w-[calc(100%_-_56px)] max-[540px]:w-[calc(100%_-_36px)]">
@@ -18,17 +17,16 @@ const Main = () => <div className="text-ink bg-base min-h-[100svh] flex flex-col
           <div className="flex items-center flex-wrap gap-[23px] mt-[22px] max-[540px]:gap-5 max-[540px]:[&_.landing-button]:w-full max-[540px]:[&_.landing-text-link]:mx-auto"><Link to="/signup" className="button-primary landing-button inline-flex items-center justify-center py-[17px] px-[26px] rounded-[9px] text-[15px] font-semibold hover:[transform:translateY(-2px)] motion-reduce:hover:transform-none">Start your notebook</Link></div>
           <div className="flex flex-wrap gap-[23px] mt-4 text-muted text-[13px] [&_>_span]:flex [&_>_span]:items-center [&_>_span]:gap-1.5 [&_.bi]:text-primary max-[540px]:justify-center max-[540px]:gap-[18px] max-[540px]:text-[12px]"><span><Icon name="check2" /> Simple by design</span><span><Icon name="check2" /> Yours to organize</span></div>
         </div>
-        <figure id="workspace" className="min-w-0 m-0 [scroll-margin-top:24px] max-[800px]:w-[min(600px,_100%)] max-[800px]:mx-auto">
-          <figcaption className="flex items-center gap-2 mb-3.5 text-muted text-[14px]"><Icon name="camera-video" /> A closer look at NoteSnap</figcaption>
-          <div className="[aspect-ratio:16_/_10] overflow-hidden border border-border rounded-[20px] bg-soft shadow-[0_24px_60px_-28px_#263c4b35] max-[540px]:[aspect-ratio:1.2] max-[540px]:rounded-[16px] min-[801px]:[aspect-ratio:auto] min-[801px]:h-[clamp(300px,_39svh,_400px)] [@media(min-width:801px)_and_(max-height:800px)]:h-[280px]">
-            {demoVideoSrc ? <video className="block w-full h-full object-contain bg-ink" src={demoVideoSrc} controls playsInline preload="metadata" aria-label="NoteSnap product walkthrough">
-                Your browser does not support video playback.
-              </video> : <div className="flex flex-col items-center justify-center text-center h-full p-7 [background:radial-gradient(ellipse_at_top_right,_var(--color-highlight)_0,_transparent_65%),_linear-gradient(140deg,_var(--color-soft),_var(--color-soft))] [&_h2]:text-[clamp(22px,_2.3vw,_30px)] [&_h2]:font-semibold [&_h2]:tracking-[-.7px] [&_p]:mt-2.5 [&_p]:text-muted [&_p]:text-[16px] [&_p]:leading-[1.6] max-[540px]:p-5 max-[540px]:[&_p]:text-[14px]">
-                <span className="grid place-items-center w-[68px] h-[68px] border border-border rounded-[20px] bg-[#ffffffb3] text-primary text-[30px] mb-[22px] max-[540px]:mb-[18px] min-[801px]:w-[58px] min-[801px]:h-[58px] min-[801px]:text-[26px] min-[801px]:mb-4"><Icon name="camera-video" /></span>
-                <h2>Your ideas, in motion.</h2>
-                <p>A closer look at your everyday notebook.</p>
-                <span className="mt-[23px] py-[7px] px-[13px] rounded-[999px] bg-[#ffffffbd] border border-border text-primary text-[13px] min-[801px]:mt-[17px]">Video coming soon</span>
-              </div>}
+        <figure id="workspace" className="min-w-0 m-0 max-[800px]:w-[min(600px,_100%)] max-[800px]:mx-auto">
+          <div className="aspect-[16/10] overflow-hidden rounded-[20px] border border-border bg-soft shadow-[0_24px_60px_-28px_#2a1a0e35] max-[540px]:rounded-2xl min-[801px]:aspect-auto min-[801px]:h-[clamp(300px,39svh,400px)] [@media(min-width:801px)_and_(max-height:800px)]:h-[280px]">
+            <img
+              src="/notebook-hero.jpg"
+              alt="An open notebook headed My Notes, with handwritten ideas beside a blue pen, coffee, and laptop."
+              width="1586"
+              height="992"
+              fetchPriority="high"
+              className="h-full w-full object-cover object-center"
+            />
           </div>
         </figure>
       </section>

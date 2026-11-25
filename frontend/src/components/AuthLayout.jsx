@@ -20,7 +20,7 @@ const AuthLayout = ({
         <span className="inline-flex items-center gap-2 py-2 px-3 border border-border rounded-[6px] bg-soft text-primary text-[13px]"><Icon name="stars" /> A little space for your big ideas</span>
         <h2>A clear page.<br /><span>A clearer mind.</span></h2>
         <p>Keep your ideas, everyday reminders, and next big plans together in one thoughtful space.</p>
-        <div className="max-w-[355px] py-[25px] px-7 mt-[30px] mr-0 mb-[23px] ml-3 border border-border rounded-[14px] [background:linear-gradient(135deg,_var(--color-soft),_var(--color-secondary-soft))] -rotate-3 shadow-[0_15px_40px_-25px_#263c4b55] [&_h3]:text-[21px] [&_h3]:font-semibold [&_h3]:tracking-[-.5px] [&_h3]:mt-[18px] [&_h3]:mx-0 [&_h3]:mb-2.5 [&_>_p]:text-[15px] [&_>_p]:leading-[1.8] [&_>_p]:text-muted" aria-label="Example note">
+        <div className="max-w-[355px] py-[25px] px-7 mt-[30px] mr-0 mb-[23px] ml-3 border border-border rounded-[14px] [background:linear-gradient(135deg,_var(--color-soft),_var(--color-secondary-soft))] -rotate-3 shadow-[0_15px_40px_-25px_#2a1a0e55] [&_h3]:text-[21px] [&_h3]:font-semibold [&_h3]:tracking-[-.5px] [&_h3]:mt-[18px] [&_h3]:mx-0 [&_h3]:mb-2.5 [&_>_p]:text-[15px] [&_>_p]:leading-[1.8] [&_>_p]:text-muted" aria-label="Example note">
           <div className="flex justify-between gap-5 text-primary text-[11px] tracking-[1px]"><span>A NOTE TO YOURSELF</span><Icon name="pin-angle-fill" /></div>
           <h3>Good things start small.</h3>
           <p>Write down the thought.<br />Make a little room.<br />See where it takes you.</p>
@@ -28,7 +28,7 @@ const AuthLayout = ({
         </div>
         <div className="flex items-center gap-2 text-primary text-[13px] mt-7"><Icon name="check2-circle" /> Your thoughts. Your own little place.</div>
       </aside>
-      <div className="w-full max-w-[450px] justify-self-end p-9 bg-white border border-border rounded-[18px] shadow-[0_18px_50px_-28px_#263c4b30] max-[1000px]:p-7 max-[760px]:justify-self-center max-[480px]:py-[26px] max-[480px]:px-[22px] max-[480px]:rounded-[14px]">{children}</div>
+      <div className="w-full max-w-[450px] justify-self-end p-9 bg-white border border-border rounded-[18px] shadow-[0_18px_50px_-28px_#2a1a0e30] max-[1000px]:p-7 max-[760px]:justify-self-center max-[480px]:py-[26px] max-[480px]:px-[22px] max-[480px]:rounded-[14px]">{children}</div>
     </main>
     <footer className="w-[min(1160px,_calc(100%_-_80px))] mx-auto flex justify-between gap-5 py-5 border-t border-border text-muted text-[12px] [&_a:hover]:text-primary max-[1000px]:w-[calc(100%_-_56px)] max-[480px]:w-[calc(100%_-_36px)] max-[480px]:text-[11px] max-[480px]:gap-3"><span>A little more organized. A little more you.</span><Link to="/">Back to home</Link></footer>
   </div>;

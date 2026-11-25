@@ -4,12 +4,16 @@ import Navbar from "../components/Navbar";
 import NoteCard from "../components/NoteCard";
 import ViewNote from "../components/ViewNote";
 import AddEditNotes from "../components/AddEditNotes";
+import DeleteNoteModal from "../components/DeleteNoteModal";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
 import Toast from "../components/Toast";
 const Home = () => {
   const [viewedNoteId, setViewedNoteId] = useState(null);
+  const [noteToDelete, setNoteToDelete] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
   const [editor, setEditor] = useState({
     isShown: false,
     type: "add",
@@ -66,13 +70,26 @@ const Home = () => {
   useEffect(() => {
     getALLNotes();
   }, [getALLNotes, handleAuthError]);
-  const deleteNote = async note => {
+  const cancelDelete = () => {
+    if (isDeleting) return;
+    setNoteToDelete(null);
+    setDeleteError("");
+  };
+  const deleteNote = async () => {
+    if (!noteToDelete || isDeleting) return;
+    const note = noteToDelete;
+    setIsDeleting(true);
+    setDeleteError("");
     try {
       await axiosInstance.delete("/delete-notes/" + note._id);
       setAllNotes(notes => notes.filter(item => item._id !== note._id));
+      setNoteToDelete(null);
+      setViewedNoteId(id => id === note._id ? null : id);
       showToastMessage("Note deleted", "delete");
     } catch (failure) {
-      if (!handleAuthError(failure)) showToastMessage("Unable to delete this note. Please try again.", "error");
+      if (!handleAuthError(failure)) setDeleteError("Unable to delete this note. Please try again.");
+    } finally {
+      setIsDeleting(false);
     }
   };
   const updateIsPinned = async note => {
@@ -102,11 +119,11 @@ const Home = () => {
             isShown: true,
             type: "edit",
             data: note
-          })} onDelete={() => deleteNote(note)} onPinNote={() => updateIsPinned(note)} />)}</div> : <div className="flex-1 min-h-[350px] flex flex-col items-center justify-center text-center py-10 px-5 [&_>_span]:grid [&_>_span]:place-items-center [&_>_span]:w-[76px] [&_>_span]:h-[76px] [&_>_span]:bg-soft [&_>_span]:text-primary [&_>_span]:text-[34px] [&_>_span]:rounded-[22px] [&_>_span]:mb-[25px] [&_h2]:text-[24px] [&_h2]:font-semibold [&_h2]:tracking-[-.7px] [&_p]:max-w-[370px] [&_p]:text-[15px] [&_p]:leading-[1.8] [&_p]:text-muted [&_p]:mt-3 [&_>_button]:mt-6 max-[600px]:min-h-[320px] max-[600px]:px-0 max-[600px]:[&_h2]:text-[23px]"><span className="grid place-items-center w-[76px] h-[76px] bg-soft text-primary text-[34px] rounded-[22px] mb-[25px]"><Icon name={query ? "search" : "journal-plus"} /></span><h2>{query ? "No notes found." : "A fresh page, just for you."}</h2><p>{query ? "Try another search to find your thoughts." : "Your next idea starts here. Create a note and see where it takes you."}</p>{!query && <button className="button-primary" onClick={addNote}><Icon name="plus-lg" /> Create your first note</button>}</div>}
+          })} onDelete={() => { setDeleteError(""); setNoteToDelete(note); }} onPinNote={() => updateIsPinned(note)} />)}</div> : <div className="flex-1 min-h-[350px] flex flex-col items-center justify-center text-center py-10 px-5 [&_>_span]:grid [&_>_span]:place-items-center [&_>_span]:w-[76px] [&_>_span]:h-[76px] [&_>_span]:bg-soft [&_>_span]:text-primary [&_>_span]:text-[34px] [&_>_span]:rounded-[22px] [&_>_span]:mb-[25px] [&_h2]:text-[24px] [&_h2]:font-semibold [&_h2]:tracking-[-.7px] [&_p]:max-w-[370px] [&_p]:text-[15px] [&_p]:leading-[1.8] [&_p]:text-muted [&_p]:mt-3 [&_>_button]:mt-6 max-[600px]:min-h-[320px] max-[600px]:px-0 max-[600px]:[&_h2]:text-[23px]"><span className="grid place-items-center w-[76px] h-[76px] bg-soft text-primary text-[34px] rounded-[22px] mb-[25px]"><Icon name={query ? "search" : "journal-plus"} /></span><h2>{query ? "No notes found." : "A fresh page, just for you."}</h2><p>{query ? "Try another search to find your thoughts." : "Your next idea starts here. Create a note and see where it takes you."}</p>{!query && <button className="button-primary" onClick={addNote}><Icon name="plus-lg" /> Create your first note</button>}</div>}
           <footer className="mt-auto pt-[38px] flex justify-center items-center gap-2 text-muted text-[12px]"><Icon name="journal-bookmark" /> A little more organized. A little more you.</footer>
         </main>
       </div>
-      <Modal isOpen={editor.isShown || Boolean(viewedNote)} onRequestClose={closeModal} contentLabel={viewedNote ? `View note: ${viewedNote.title}` : editor.type === "edit" ? "Edit note" : "New note"} className={viewedNote ? "max-h-[calc(100svh_-_48px)] overflow-y-auto outline-none p-[30px] rounded-[18px] border border-border bg-base shadow-[0_30px_80px_#263c4b33] max-[600px]:p-[22px] max-[600px]:max-h-[calc(100svh_-_28px)] w-[min(560px,_100%)] pt-[42px] px-10 pb-6 max-[600px]:pt-[30px] max-[600px]:px-6 max-[600px]:pb-[22px]" : "w-[min(600px,_100%)] max-h-[calc(100svh_-_48px)] overflow-y-auto outline-none p-[30px] rounded-[18px] border border-border bg-base shadow-[0_30px_80px_#263c4b33] max-[600px]:p-[22px] max-[600px]:max-h-[calc(100svh_-_28px)]"} overlayClassName="fixed inset-0 bg-[#263c4b66] backdrop-blur-[4px] z-[100] flex items-center justify-center p-6 max-[600px]:p-3.5">
+      <Modal isOpen={editor.isShown || Boolean(viewedNote)} onRequestClose={closeModal} contentLabel={viewedNote ? `View note: ${viewedNote.title}` : editor.type === "edit" ? "Edit note" : "New note"} className={viewedNote ? "max-h-[calc(100svh_-_48px)] overflow-y-auto outline-none p-[30px] rounded-[18px] border border-border bg-surface shadow-[0_30px_80px_#2a1a0e33] max-[600px]:p-[22px] max-[600px]:max-h-[calc(100svh_-_28px)] w-[min(560px,_100%)] pt-[42px] px-10 pb-6 max-[600px]:pt-[30px] max-[600px]:px-6 max-[600px]:pb-[22px]" : "w-[min(600px,_100%)] max-h-[calc(100svh_-_48px)] overflow-y-auto outline-none p-[30px] rounded-[18px] border border-border bg-base shadow-[0_30px_80px_#2a1a0e33] max-[600px]:p-[22px] max-[600px]:max-h-[calc(100svh_-_28px)]"} overlayClassName="fixed inset-0 bg-[#2a1a0e24] backdrop-blur-[4px] z-[100] flex items-center justify-center p-6 max-[600px]:p-3.5">
         {viewedNote ? <ViewNote note={viewedNote} onClose={closeModal} onEdit={() => {
         setEditor({
           isShown: true,
@@ -116,6 +133,7 @@ const Home = () => {
         setViewedNoteId(null);
       }} /> : <AddEditNotes type={editor.type} noteData={editor.data} onclose={closeEditor} getALLNotes={getALLNotes} showToastMessage={showToastMessage} />}
       </Modal>
+      <DeleteNoteModal note={noteToDelete} isDeleting={isDeleting} error={deleteError} onCancel={cancelDelete} onConfirm={deleteNote} />
       <Toast isShown={toast.isShown} message={toast.message} type={toast.type} onclose={closeToast} />
     </div>;
 };
